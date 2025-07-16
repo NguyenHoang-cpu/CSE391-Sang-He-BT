@@ -66,4 +66,150 @@
       <td>10</td>
     </tr>
   </table>
+
+    <div class="form-container">
+
+        <div class="section-title"><b>Basic Info</b></div>
+        <div class="form-group">
+            <label for="employeeId">Employee ID</label>
+            <input type="text" id="employeeId" value="9">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" value="Dodsworth">
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <div class="input-with-icon">
+                <input type="text" id="firstName" value="Anne">
+                 </div>
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <div class="radio-group">
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female" >
+                <label for="female">Female</label>
+                <input type="radio" id="XXX" name="gender" value="XXX">
+                <label for="XXX">XXX</label>
+                <input type="radio" id="ZZZ" name="gender" value="ZZZ" checked>
+                <label for="ZZZ">ZZZ</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" value="Sales Representative">
+        </div>
+        <div class="form-group">
+            <label for="suffix">Suffix</label>
+            <input type="text" id="suffix" value="Ms.">
+        </div>
+        <div class="form-group">
+            <label for="birthDate">BirthDate</label>
+            <div class="input-with-icon">
+                <input type="text" id="birthDate" value="1969-07-02 00:00:00">
+                <span class="icon">(?)</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="hireDate">HireDate</label>
+            <input type="text" id="hireDate" value="1994-11-15 00:00:00">
+        </div>
+        <div class="form-group">
+            <label for="ssn">SSN # (if applicable)</label>
+            <div class="input-with-icon">
+                <input type="text" id="ssn">
+                <span class="icon">&#x1F50D;</span> </div>
+        </div>
+        <div class="form-group">
+            <label for="reportsTo">Reports To</label>
+            <div class="input-with-button">
+                <input type="text" id="reportsTo" value="Buchanan">
+                <button>&#9660;</button> </div>
+        </div>
+         
+        <br>
+        <div class="section-title"><b>Contact Info</b></div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" value="name@example.com">
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" value="7 Houndstooth Rd.">
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" value="London">
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label>
+            <input type="text" id="region">
+        </div>
+        <div class="form-group">
+            <label for="postalCode">Postal Code</label>
+            <input type="text" id="postalCode" value="WG2 7LT">
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country">
+                <option value="russianFederation" selected>Russian Federation</option>
+                <option value="vietnam">Vietnam</option>
+                <option value="usa">USA</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="usHomePhone">US Home Phone</label>
+            <input type="text" id="usHomePhone" value="(234)234-2342">
+        </div>
+        <div class="form-group">
+            <label for="photo">Photo</label>
+            <input type="text" id="photo" value="Emp109.bmp">
+        </div>
+        
+        <br>
+        <div class="section-title"> <b>Optional Info</b> </div>
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <div class="textarea-group">
+                <div class="toolbar">
+                    <button>B</button>
+                    <button>I</button>
+                    <button>S</button>
+                    <button>U</button>
+                    <button>&#9776;</button> <button>&#x2022;</button> <button>&#x2610;</button> <button>&#x2713;</button> <button>X&#x2082;</button> <button>X&#xB2;</button> <button>&#x22C6;</button> <button>&#x21B5;</button> </div>
+                <textarea id="notes">Anne has a BA degree in English from St. Lawrence College. She is fluent in French and German ZZZZ</textarea>
+            </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label>Preferred Shift</label>
+            <input type="radio" id="regularShift" name="preferredShift" value="Regular">
+            <label for="regularShift">Regular</label>
+            <br>
+            <input type="radio" id="gravyYardShift" name="preferredShift" value="Gravy Yard" checked>
+            <label for="gravyYardShift">Gravy Yard</label>
+        </div>
+        <div class="form-group checkbox-group">
+            <label for="active">Active?</label>
+            <input type="checkbox" id="active" checked>
+        </div>
+
+        <div class="form-group captcha-group">
+            <label>Are you human?</label>
+            <br>
+            <button>Click to change</button>
+            <img src="https://www.veerotech.net/kb/wp-content/uploads/2018/11/captcha.png.webp" alt="Captcha Image"> <input type="text" placeholder="">
+            <br>
+        </div>
+        
+        <div class="form-actions">
+            <span>&#x25C0;</span> <span>&#x25B6;</span> <button class="submit-btn">&#x2713; Submit</button>
+            <button class="cancel-btn">&#x2716; Cancel</button>
+        </div>
+
+        <div class="required-note">* required</div>
+
+    </div>
   </html>
