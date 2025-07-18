@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 30px;
+    }
+
+    h1 {
+        background-color: #007bff;
+        color: white;
+        padding: 15px;
+        margin: -30px -30px 20px -30px; /* Adjust to extend to the container edges */
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        text-align: center;
+        font-size: 24px;
+    }
+    h2 {
+        background-color: #f46969;
+        color: white;
+        padding: 15px;
+        margin: -30px -30px 20px -30px; /* Adjust to extend to the container edges */
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="date"],
+    .form-group textarea {
+        width: calc(100% - 20px); /* Account for padding */
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        font-size: 16px;
+    }
+
+    .form-group textarea {
+        resize: vertical; /* Allow vertical resizing */
+        min-height: 80px;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 5px;
+    }
+
+    .radio-group input[type="radio"] {
+        margin-right: 5px;
+    }
+
+    button[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    /* Table Styles */
+    .table {
+        width: 100%;
+        max-width: 900px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow-x: auto; /* For responsive tables on smaller screens */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse; /* Collapse borders into a single border */
+        margin-top: 15px;
+    }
+
+    table th,
+    table td {
+        border: 1px solid #ddd; /* Light grey border for all cells */
+        padding: 12px;
+        text-align: left;
+    }
+
+    table th {
+        background-color: #f2f2f2; /* Different background color for table header */
+        color: #333;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f9f9f9; /* Zebra striping for rows */
+    }
+
+    table tbody tr:hover {
+        background-color: #e9ecef; /* Highlight row on hover */
+        text-decoration: underline; /* Underline text on hover */
+    }
+
+    .hd a {
+        margin-right: 10px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .hd a:hover {
+        text-decoration: underline;
+    }
+
+    .actions a {
+        margin-right: 10px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .actions a:hover {
+        text-decoration: underline;
+    }
+
+</style>
+    <title>Thêm Sinh Viên</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Thêm sinh viên</h1>
+
+        <form>
+            <div class="form-group">
+                <label for="ma">Mã sinh viên:</label>
+                <input type="text" 
+                 required>
+            </div>
+
+            <div class="form-group">
+                <label for="hoten">Họ và tên:</label>
+                <input type="text" 
+                 required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" 
+                 required>
+            </div>
+
+            <div class="form-group">
+                <label for="ngaysinh">Ngày sinh:</label>
+                <input type="date" 
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Giới tính:</label>
+                <div class="radio-group">
+                    <input type="radio" 
+                    name="gt" 
+                    value="nam">
+                    <label for="nam">Nam</label>
+                    <input type="radio" 
+                    name="gt" 
+                    value="nu">
+                    <label for="nu">Nữ</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="note">Ghi chú:</label>
+                <br>
+            
+                <textarea id="note"></textarea>
+            </div>
+
+            <button type="submit">Thêm sinh viên</button>
+        </form>
+    </div>
+
+    <div class="table">
+    <br>
+    <h2> Bảng sinh viên</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã SV</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>001</td>
+                <td>Nguyễn Văn A</td>
+                <td>vana@gmail.com</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td class="hd">
+                    <a href="#">Sửa</a>
+                    <a href="#">Xoá</a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>002</td>
+                <td>Nguyễn Văn B</td>
+                <td>vanb@gmail.com</td>
+                <td>Nam</td>
+                <td>02/02/2000</td>
+                <td class="hd">
+                    <a href="#">Sửa</a>
+                    <a href="#">Xoá</a>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>003</td>
+                <td>Nguyễn Thị C</td>
+                <td>thic@gmail.com</td>
+                <td>Nu</td>
+                <td>03/03/2000</td>
+                <td class="actions">
+                    <a href="#">Sửa</a>
+                    <a href="#">Xoá</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>
