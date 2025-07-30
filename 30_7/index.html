@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý giao dịch</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+    .header {
+      background-color: #000;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+    .toolbar {
+      background: #fff;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .toolbar input[type="text"] {
+      padding: 6px;
+      width: 200px;
+      margin-left: auto;
+    }
+    .toolbar button {
+      padding: 6px 12px;
+      background-color: #3498db;
+      border: none;
+      color: white;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .table-wrapper {
+      padding: 0 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+      font-size: 13px;
+    }
+    th {
+      background-color: #eee;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      width: 360px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .popup-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .popup-header button {
+      border: none;
+      background: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .popup-body {
+      padding: 16px;
+    }
+    .popup-body input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .popup-footer {
+      padding: 12px 16px;
+      background: #f5f5f5;
+      text-align: right;
+      border-top: 1px solid #ddd;
+    }
+    .popup-footer button {
+      padding: 8px 16px;
+      margin-left: 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .popup-footer .cancel {
+      background: #ccc;
+    }
+    .popup-footer .submit {
+      background: #28a745;
+      color: white;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 8px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Trường Đại học Thủy lợi</div>
+
+  <div class="toolbar">
+    <button onclick="showForm()">+ THÊM</button>
+    <button>XUẤT RA FILE</button>
+    <input type="text" placeholder="Tìm kiếm giao dịch">
+    <button>TÌM KIẾM</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="giaoDichTable">
+      <thead>
+        <tr>
+          <th>Hành động</th>
+          <th>ID</th>
+          <th>Khách hàng</th>
+          <th>Nhân viên</th>
+          <th>Số tiền</th>
+          <th>Ngày mua</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="popup" id="popupForm">
+    <div class="popup-header">
+      Thêm giao dịch
+      <button onclick="closeForm()">&times;</button>
+    </div>
+    <div class="popup-body">
+      <form id="form">
+        <input type="text" id="khachHang" placeholder="Khách hàng">
+        <input type="text" id="nhanVien" placeholder="Nhân viên">
+        <input type="number" id="soTien" placeholder="Số tiền">
+        <span class="error" id="errorMsg"></span>
+      </form>
+    </div>
+    <div class="popup-footer">
+      <button type="button" class="cancel" onclick="closeForm()">Hủy</button>
+      <button type="button" class="submit" onclick="themGiaoDich()">Thêm</button>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const tbody = document.querySelector("#giaoDichTable tbody");
+    const errorMsg = document.getElementById("errorMsg");
+
+    function loadTable() {
+      tbody.innerHTML = "";
+      giaoDichData.forEach(gd => {
+        const row = `<tr>
+          <td>
+            <button title="Xem" onclick="xemGiaoDich(this)">🔍</button>
+            <button title="Sửa" onclick="suaGiaoDich(this)">✏️</button>
+            <button title="Xóa" onclick="xoaGiaoDich(this)">❌</button>
+          </td>
+          <td>${gd.id}</td>
+          <td>${gd.khachHang}</td>
+          <td>${gd.nhanVien}</td>
+          <td>${gd.soTien.toLocaleString()}</td>
+          <td>${gd.ngayMua}</td>
+        </tr>`;
+        tbody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    function showForm() {
+      document.getElementById("popupForm").style.display = "block";
+      errorMsg.textContent = "";
+    }
+
+    function closeForm() {
+      document.getElementById("popupForm").style.display = "none";
+      document.getElementById("form").reset();
+      document.getElementById("form").dataset.editingId = "";
+    }
+
+    function xemGiaoDich(btn) {
+      const row = btn.closest("tr");
+      const data = Array.from(row.children).map(td => td.innerText);
+      alert(`Chi tiết giao dịch:\nID: ${data[1]}\nKhách hàng: ${data[2]}\nNhân viên: ${data[3]}\nSố tiền: ${data[4]}\nNgày mua: ${data[5]}`);
+    }
+
+    function suaGiaoDich(btn) {
+      const row = btn.closest("tr");
+      const id = row.children[1].innerText;
+      const khachHang = row.children[2].innerText;
+      const nhanVien = row.children[3].innerText;
+      const soTien = row.children[4].innerText.replace(/\./g, '').replace(/,/g, '');
+
+      document.getElementById("popupForm").style.display = "block";
+      document.getElementById("khachHang").value = khachHang;
+      document.getElementById("nhanVien").value = nhanVien;
+      document.getElementById("soTien").value = soTien;
+      document.getElementById("form").dataset.editingId = id;
+    }
+
+    function xoaGiaoDich(btn) {
+      if (confirm("Bạn có chắc muốn xóa giao dịch này?")) {
+        const row = btn.closest("tr");
+        const id = parseInt(row.children[1].innerText);
+        const index = giaoDichData.findIndex(g => g.id === id);
+        if (index !== -1) {
+          giaoDichData.splice(index, 1);
+          loadTable();
+        }
+      }
+    }
+
+    function themGiaoDich() {
+      const khachHang = document.getElementById("khachHang").value.trim();
+      const nhanVien = document.getElementById("nhanVien").value.trim();
+      const soTien = document.getElementById("soTien").value.trim();
+      const editingId = document.getElementById("form").dataset.editingId;
+
+      if (!khachHang || !nhanVien || !soTien) {
+        errorMsg.textContent = "Vui lòng nhập đầy đủ thông tin.";
+        return;
+      }
+      if (khachHang.length > 30) {
+        errorMsg.textContent = "Tên khách hàng không được quá 30 ký tự.";
+        return;
+      }
+      if (nhanVien.length > 30) {
+        errorMsg.textContent = "Tên nhân viên không được quá 30 ký tự.";
+        return;
+      }
+      if (isNaN(soTien) || parseInt(soTien) <= 0) {
+        errorMsg.textContent = "Số tiền phải là số nguyên dương hợp lệ.";
+        return;
+      }
+
+      if (editingId) {
+        const index = giaoDichData.findIndex(g => g.id == editingId);
+        if (index !== -1) {
+          giaoDichData[index].khachHang = khachHang;
+          giaoDichData[index].nhanVien = nhanVien;
+          giaoDichData[index].soTien = parseInt(soTien);
+          alert("Cập nhật giao dịch thành công!");
+        }
+      } else {
+        const newId = Math.max(...giaoDichData.map(g => g.id)) + 1;
+        const newDate = new Date().toLocaleString("vi-VN", { hour12: false });
+        giaoDichData.push({
+          id: newId,
+          khachHang,
+          nhanVien,
+          soTien: parseInt(soTien),
+          ngayMua: newDate
+        });
+        alert("Thêm giao dịch mới thành công!");
+      }
+
+      loadTable();
+      closeForm();
+    }
+
+    loadTable();
+  </script>
+</body>
+</html>
