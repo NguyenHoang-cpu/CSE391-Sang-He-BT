@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý nhân viên - Trường Đại học Thủy Lợi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+    .header {
+      background-color: #0d47a1;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .header-right a {
+      color: white;
+      text-decoration: none;
+    }
+    .header-right input {
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    .header-right button {
+      background-color: #4285f4;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .main-content {
+      padding: 20px;
+    }
+    .panel {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .panel-header-left {
+      display: flex;
+      gap: 10px;
+    }
+    .panel-header-left button, .panel-header-right button {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .panel-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-header-right input {
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table thead {
+      background-color: #f5f5f5;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .table-actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 5px;
+      border-radius: 4px;
+    }
+    .edit-btn { color: #f9a825; }
+    .delete-btn { color: #d32f2f; }
+    .view-btn { color: #4285f4; }
+    .active-status {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .active-status.active { color: #4caf50; }
+    .active-status.inactive { color: #f44336; }
+    .footer {
+      background-color: #0d47a1;
+      color: white;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 500px;
+      position: relative;
+    }
+    .close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-buttons {
+      text-align: right;
+    }
+    .form-buttons button {
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-left: 10px;
+    }
+    .form-buttons .cancel {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+    .form-buttons .submit {
+      background-color: #4caf50;
+      color: white;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">Trường Đại học Thủy lợi</div>
+    <div class="header-right">
+      <a href="#">Trang chủ</a>
+      <a href="#">Quản lý cửa hàng</a>
+      <input type="text" placeholder="Nhập nội dung tìm kiếm">
+      <button>TÌM KIẾM</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <button id="add-employee-btn">➕ THÊM MỚI</button>
+          <button>➡️ XUẤT RA FILE</button>
+        </div>
+        <div class="panel-header-right">
+          <label for="search-input">Tìm kiếm theo Tên</label>
+          <input type="text" id="search-input" placeholder="Nhập tên">
+        </div>
+      </div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th><input type="checkbox"></th>
+            <th>Hành động</th>
+            <th>STT</th>
+            <th>Tên</th>
+            <th>Họ đệm</th>
+            <th>Địa chỉ</th>
+            <th>Hoạt động</th>
+          </tr>
+        </thead>
+        <tbody id="employee-table-body">
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>TRƯỜNG ĐẠI HỌC THỦY LỢI</p>
+    <p>Địa chỉ: 175 Tây Sơn, Đống Đa, Hà Nội</p>
+    <p>Điện thoại: (024) 38522201 - Fax: (024) 35633351</p>
+    <p>Email: phongctc@tlu.edu.vn</p>
+  </div>
+
+  <div id="add-employee-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3 id="modal-title">Thêm Nhân viên</h3>
+      <form id="add-employee-form">
+        <input type="hidden" id="stt" name="stt">
+        <div class="form-group">
+          <label for="ten">Tên</label>
+          <input type="text" id="ten" name="ten" placeholder="Nhập tên">
+          <p id="ten-error" class="error-message"></p>
+        </div>
+        <div class="form-group">
+          <label for="hoDem">Họ đệm</label>
+          <input type="text" id="hoDem" name="hoDem" placeholder="Nhập họ đệm">
+          <p id="hoDem-error" class="error-message"></p>
+        </div>
+        <div class="form-group">
+          <label for="diaChi">Địa chỉ</label>
+          <input type="text" id="diaChi" name="diaChi" placeholder="Nhập địa chỉ">
+          <p id="diaChi-error" class="error-message"></p>
+        </div>
+        <div class="form-buttons">
+          <button type="button" class="cancel">Hủy</button>
+          <button type="submit" class="submit" id="submit-button">Thêm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
