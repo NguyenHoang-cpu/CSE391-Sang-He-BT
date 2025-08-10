@@ -1,0 +1,101 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px 40px; /* Tăng padding ngang một chút */
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 700px; /* Tăng chiều rộng tối đa của modal */
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center; /* Căn giữa tiêu đề */
+}
+
+/* --- PHẦN QUAN TRỌNG NHẤT ĐỂ CHIA CỘT --- */
+.modal-content form {
+  display: grid; /* Kích hoạt chế độ Grid Layout */
+  grid-template-columns: 1fr 1fr; /* Chia form thành 2 cột với độ rộng bằng nhau */
+  gap: 15px 25px; /* Tạo khoảng cách: 15px cho hàng (dọc), 25px cho cột (ngang) */
+}
+/* ------------------------------------------- */
+
+.form-group {
+  margin-bottom: 0; /* Bỏ margin bottom vì đã có 'gap' của grid */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-actions {
+  /* Cho phép phần tử này chiếm trọn cả 2 cột của grid */
+  grid-column: 1 / -1; 
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px; /* Thêm khoảng cách phía trên các nút */
+}
+
+.btn-save,
+.btn-cancel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-save {
+  background-color: #28a745;
+  color: white;
+}
+.btn-save:hover { background-color: #218838; }
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+}
+.btn-cancel:hover { background-color: #5a6268; }
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
